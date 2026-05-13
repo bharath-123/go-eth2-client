@@ -154,6 +154,8 @@ func (*Service) checkEventSpecificHandler(opts *api.EventsOpts, topic string) er
 		hasHandler = opts.ExecutionPayloadBidHandler != nil
 	case "execution_payload_gossip":
 		hasHandler = opts.ExecutionPayloadGossipHandler != nil
+	case "fast_confirmation":
+		hasHandler = opts.FastConfirmationHandler != nil
 	case "finalized_checkpoint":
 		hasHandler = opts.FinalizedCheckpointHandler != nil
 	case "head":
@@ -221,6 +223,8 @@ func (s *Service) handleEvent(ctx context.Context,
 		s.handleExecutionPayloadBidEvent(ctx, msg, opts)
 	case "execution_payload_gossip":
 		s.handleExecutionPayloadGossipEvent(ctx, msg, opts)
+	case "fast_confirmation":
+		s.handleFastConfirmationEvent(ctx, msg, opts)
 	case "finalized_checkpoint":
 		s.handleFinalizedCheckpointEvent(ctx, msg, opts)
 	case "head":
@@ -369,6 +373,33 @@ func (*Service) handleBlockGossipEvent(ctx context.Context,
 	switch {
 	case opts.BlockGossipHandler != nil:
 		opts.BlockGossipHandler(ctx, data)
+	case opts.Handler != nil:
+		opts.Handler(&apiv1.Event{
+			Topic: string(msg.Event),
+			Data:  data,
+		})
+	default:
+		log.Debug().Msg("No specific or generic handler supplied; ignoring")
+	}
+}
+
+func (*Service) handleFastConfirmationEvent(ctx context.Context,
+	msg *sse.Event,
+	opts *api.EventsOpts,
+) {
+	log := zerolog.Ctx(ctx)
+	data := &apiv1.FastConfirmationEvent{}
+
+	err := json.Unmarshal(msg.Data, data)
+	if err != nil {
+		log.Error().Err(err).RawJSON("data", msg.Data).Msg("Failed to parse fast confirmation event")
+
+		return
+	}
+
+	switch {
+	case opts.FastConfirmationHandler != nil:
+		opts.FastConfirmationHandler(ctx, data)
 	case opts.Handler != nil:
 		opts.Handler(&apiv1.Event{
 			Topic: string(msg.Event),

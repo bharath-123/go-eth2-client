@@ -64,6 +64,8 @@ type EventsOpts struct {
 	// ExecutionPayloadGossipHandler is a handler for the execution_payload_gossip event
 	// (SignedExecutionPayloadEnvelope passed gossip validation).
 	ExecutionPayloadGossipHandler ExecutionPayloadGossipEventHandlerFunc
+	// FastConfirmationHandler is a handler for the fast_confirmation event.
+	FastConfirmationHandler FastConfirmationEventHandlerFunc
 	// FinalizedCheckpointHandler is a handler for the finalized_checkpoint event.
 	FinalizedCheckpointHandler FinalizedCheckpointEventHandlerFunc
 	// HeadHandler is a handler for the head event.
@@ -141,6 +143,9 @@ type ExecutionPayloadBidEventHandlerFunc func(context.Context, *gloas.SignedExec
 
 // ExecutionPayloadGossipEventHandlerFunc is the handler for execution_payload_gossip events.
 type ExecutionPayloadGossipEventHandlerFunc func(context.Context, *gloas.SignedExecutionPayloadEnvelope)
+
+// FastConfirmationEventHandlerFunc is the handler for fast_confirmation events.
+type FastConfirmationEventHandlerFunc func(context.Context, *apiv1.FastConfirmationEvent)
 
 // PayloadAttestationMessageEventHandlerFunc is the handler for payload_attestation_message events.
 type PayloadAttestationMessageEventHandlerFunc func(context.Context, *gloas.PayloadAttestationMessage)

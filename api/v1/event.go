@@ -49,6 +49,7 @@ var SupportedEventTopics = map[string]bool{
 	"execution_payload_available": true,
 	"execution_payload_bid":       true,
 	"execution_payload_gossip":    true,
+	"fast_confirmation":           true,
 	"finalized_checkpoint":        true,
 	"head":                        true,
 	"inclusion_list":              true,
@@ -129,6 +130,8 @@ func (e *Event) UnmarshalJSON(input []byte) error {
 		e.Data = &ExecutionPayloadAvailableEvent{}
 	case "execution_payload_bid":
 		e.Data = &gloas.SignedExecutionPayloadBid{}
+	case "fast_confirmation":
+		e.Data = &FastConfirmationEvent{}
 	case "finalized_checkpoint":
 		e.Data = &FinalizedCheckpointEvent{}
 	case "head":
