@@ -30,7 +30,7 @@ type proposerPreferencesJSON struct {
 	ProposalSlot   string `json:"proposal_slot"`
 	ValidatorIndex string `json:"validator_index"`
 	FeeRecipient   string `json:"fee_recipient"`
-	GasLimit       string `json:"gas_limit"`
+	TargetGasLimit string `json:"target_gas_limit"`
 }
 
 // MarshalJSON implements json.Marshaler.
@@ -40,7 +40,7 @@ func (p *ProposerPreferences) MarshalJSON() ([]byte, error) {
 		ProposalSlot:   fmt.Sprintf("%d", p.ProposalSlot),
 		ValidatorIndex: fmt.Sprintf("%d", p.ValidatorIndex),
 		FeeRecipient:   fmt.Sprintf("%#x", p.FeeRecipient),
-		GasLimit:       fmt.Sprintf("%d", p.GasLimit),
+		TargetGasLimit: fmt.Sprintf("%d", p.TargetGasLimit),
 	})
 }
 
@@ -94,15 +94,15 @@ func (p *ProposerPreferences) UnmarshalJSON(input []byte) error {
 	}
 	copy(p.FeeRecipient[:], feeRecipient)
 
-	// Gas limit.
-	if data.GasLimit == "" {
-		return errors.New("gas limit missing")
+	// Target gas limit.
+	if data.TargetGasLimit == "" {
+		return errors.New("target gas limit missing")
 	}
-	gasLimit, err := strconv.ParseUint(data.GasLimit, 10, 64)
+	targetGasLimit, err := strconv.ParseUint(data.TargetGasLimit, 10, 64)
 	if err != nil {
-		return errors.Wrap(err, "invalid gas limit")
+		return errors.Wrap(err, "invalid target gas limit")
 	}
-	p.GasLimit = gasLimit
+	p.TargetGasLimit = targetGasLimit
 
 	return nil
 }
