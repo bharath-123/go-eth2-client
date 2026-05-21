@@ -29,7 +29,7 @@ func (p *ProposerPreferences) MarshalYAML() ([]byte, error) {
 		ProposalSlot:   fmt.Sprintf("%d", p.ProposalSlot),
 		ValidatorIndex: fmt.Sprintf("%d", p.ValidatorIndex),
 		FeeRecipient:   fmt.Sprintf("%#x", p.FeeRecipient),
-		GasLimit:       fmt.Sprintf("%d", p.GasLimit),
+		TargetGasLimit: fmt.Sprintf("%d", p.TargetGasLimit),
 	}, yaml.Flow(true))
 	if err != nil {
 		return nil, err

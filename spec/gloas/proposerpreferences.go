@@ -27,7 +27,7 @@ type ProposerPreferences struct {
 	ProposalSlot   phase0.Slot
 	ValidatorIndex phase0.ValidatorIndex
 	FeeRecipient   bellatrix.ExecutionAddress `ssz-size:"20"`
-	GasLimit       uint64
+	TargetGasLimit uint64
 }
 
 // String returns a string version of the structure.
