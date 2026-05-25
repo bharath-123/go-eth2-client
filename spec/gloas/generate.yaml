@@ -15,6 +15,10 @@ types:
     output: builderpendingpayment_ssz.go
   - name: BuilderPendingWithdrawal
     output: builderpendingwithdrawal_ssz.go
+  - name: BuilderPreferences
+    output: builderpreferences_ssz.go
+  - name: BuilderPreferencesRequest
+    output: builderpreferencesrequest_ssz.go
   - name: ExecutionPayload
     output: executionpayload_ssz.go
   - name: ExecutionPayloadBid
@@ -31,6 +35,8 @@ types:
     output: payloadattestationmessage_ssz.go
   - name: ProposerPreferences
     output: proposerpreferences_ssz.go
+  - name: RequestAuth
+    output: requestauth_ssz.go
   - name: SignedBeaconBlock
     output: signedbeaconblock_ssz.go
   - name: SignedExecutionPayloadBid
@@ -39,3 +45,5 @@ types:
     output: signedexecutionpayloadenvelope_ssz.go
   - name: SignedProposerPreferences
     output: signedproposerpreferences_ssz.go
+  - name: SignedRequestAuth
+    output: signedrequestauth_ssz.go
