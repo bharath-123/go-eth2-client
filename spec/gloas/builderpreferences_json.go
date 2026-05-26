@@ -24,13 +24,13 @@ import (
 
 // builderPreferencesJSON is the spec representation of the struct.
 type builderPreferencesJSON struct {
-	MaxTrustedBid string `json:"max_trusted_bid"`
+	MaxExecutionPayment string `json:"max_execution_payment"`
 }
 
 // MarshalJSON implements json.Marshaler.
 func (b *BuilderPreferences) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&builderPreferencesJSON{
-		MaxTrustedBid: fmt.Sprintf("%d", b.MaxTrustedBid),
+		MaxExecutionPayment: fmt.Sprintf("%d", b.MaxExecutionPayment),
 	})
 }
 
@@ -41,14 +41,14 @@ func (b *BuilderPreferences) UnmarshalJSON(input []byte) error {
 		return errors.Wrap(err, "invalid JSON")
 	}
 
-	if data.MaxTrustedBid == "" {
-		return errors.New("max trusted bid missing")
+	if data.MaxExecutionPayment == "" {
+		return errors.New("max execution payment missing")
 	}
-	maxTrustedBid, err := strconv.ParseUint(data.MaxTrustedBid, 10, 64)
+	maxExecutionPayment, err := strconv.ParseUint(data.MaxExecutionPayment, 10, 64)
 	if err != nil {
-		return errors.Wrap(err, "invalid max trusted bid")
+		return errors.Wrap(err, "invalid max execution payment")
 	}
-	b.MaxTrustedBid = phase0.Gwei(maxTrustedBid)
+	b.MaxExecutionPayment = phase0.Gwei(maxExecutionPayment)
 
 	return nil
 }

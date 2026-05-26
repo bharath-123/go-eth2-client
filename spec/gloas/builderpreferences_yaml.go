@@ -25,7 +25,7 @@ import (
 // MarshalYAML implements yaml.Marshaler.
 func (b *BuilderPreferences) MarshalYAML() ([]byte, error) {
 	yamlBytes, err := yaml.MarshalWithOptions(&builderPreferencesJSON{
-		MaxTrustedBid: fmt.Sprintf("%d", b.MaxTrustedBid),
+		MaxExecutionPayment: fmt.Sprintf("%d", b.MaxExecutionPayment),
 	}, yaml.Flow(true))
 	if err != nil {
 		return nil, err

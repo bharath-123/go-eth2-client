@@ -22,11 +22,11 @@ import (
 
 // BuilderPreferences communicates a proposer's per-builder preferences to a
 // specific builder ahead of the bid request. A value of zero for
-// MaxTrustedBid indicates the proposer does not accept any trusted execution
+// MaxExecutionPayment indicates the proposer does not accept any execution
 // layer payments from this builder, requiring the use of the on-chain
 // trustless payment mechanism instead.
 type BuilderPreferences struct {
-	MaxTrustedBid phase0.Gwei
+	MaxExecutionPayment phase0.Gwei
 }
 
 // String returns a string version of the structure.
