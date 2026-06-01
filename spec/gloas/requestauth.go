@@ -21,12 +21,12 @@ import (
 )
 
 // RequestAuth is used by a proposer to authenticate a bid request to a specific
-// builder. The proposer signs over the builder's public key and the slot to
-// prevent other builders from replaying the request to learn the builder's
-// valuation, and to prevent DOS attempts from competing parties.
+// builder. The proposer signs over the builder's URL and the slot to prevent
+// other builders from replaying the request to learn the builder's valuation,
+// and to prevent DOS attempts from competing parties.
 type RequestAuth struct {
-	BuilderPubkey phase0.BLSPubKey `ssz-size:"48"`
-	Slot          phase0.Slot
+	BuilderURL []byte `ssz-max:"2048"`
+	Slot       phase0.Slot
 }
 
 // String returns a string version of the structure.

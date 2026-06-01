@@ -20,7 +20,7 @@ import (
 )
 
 // BuilderPreferencesRequest is the body submitted to a builder via the
-// submitBuilderPreferences API. The Auth.Message.BuilderPubkey identifies the
+// submitBuilderPreferences API. The Auth.Message.BuilderURL identifies the
 // intended builder so the builder can reject preferences that were not
 // destined for it.
 type BuilderPreferencesRequest struct {
