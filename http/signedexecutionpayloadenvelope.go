@@ -131,7 +131,7 @@ func (s *Service) fetchSignedExecutionPayloadEnvelope(ctx context.Context,
 		return nil, errors.Join(errors.New("no block specified"), client.ErrInvalidOptions)
 	}
 
-	endpoint := fmt.Sprintf("/eth/v1/beacon/execution_payload_envelope/%s", opts.Block)
+	endpoint := fmt.Sprintf("/eth/v1/beacon/execution_payload_envelopes/%s", opts.Block)
 
 	httpResponse, err := s.get(ctx, endpoint, "", &opts.Common, true)
 	if err != nil {
