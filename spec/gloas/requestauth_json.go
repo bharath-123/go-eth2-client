@@ -14,28 +14,30 @@
 package gloas
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/ethpandaops/go-eth2-client/spec/phase0"
 	"github.com/pkg/errors"
 )
 
-// MaxURLSize is the maximum number of bytes in a builder URL.
-const MaxURLSize = 2048
+// MaxDataSize is the maximum number of bytes in the request auth data field.
+const MaxDataSize = 4096
 
 // requestAuthJSON is the spec representation of the struct.
 type requestAuthJSON struct {
-	BuilderURL string `json:"builder_url"`
-	Slot       string `json:"slot"`
+	Data string `json:"data"`
+	Slot string `json:"slot"`
 }
 
 // MarshalJSON implements json.Marshaler.
 func (r *RequestAuth) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&requestAuthJSON{
-		BuilderURL: string(r.BuilderURL),
-		Slot:       fmt.Sprintf("%d", r.Slot),
+		Data: fmt.Sprintf("%#x", r.Data),
+		Slot: fmt.Sprintf("%d", r.Slot),
 	})
 }
 
@@ -46,13 +48,17 @@ func (r *RequestAuth) UnmarshalJSON(input []byte) error {
 		return errors.Wrap(err, "invalid JSON")
 	}
 
-	if data.BuilderURL == "" {
-		return errors.New("builder URL missing")
+	if data.Data == "" {
+		return errors.New("data missing")
 	}
-	if len(data.BuilderURL) > MaxURLSize {
-		return errors.New("builder URL too long")
+	dataBytes, err := hex.DecodeString(strings.TrimPrefix(data.Data, "0x"))
+	if err != nil {
+		return errors.Wrap(err, "invalid data")
 	}
-	r.BuilderURL = []byte(data.BuilderURL)
+	if len(dataBytes) > MaxDataSize {
+		return errors.New("data too long")
+	}
+	r.Data = dataBytes
 
 	if data.Slot == "" {
 		return errors.New("slot missing")

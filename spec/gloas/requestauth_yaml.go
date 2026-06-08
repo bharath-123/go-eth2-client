@@ -25,8 +25,8 @@ import (
 // MarshalYAML implements yaml.Marshaler.
 func (r *RequestAuth) MarshalYAML() ([]byte, error) {
 	yamlBytes, err := yaml.MarshalWithOptions(&requestAuthJSON{
-		BuilderURL: string(r.BuilderURL),
-		Slot:       fmt.Sprintf("%d", r.Slot),
+		Data: fmt.Sprintf("%#x", r.Data),
+		Slot: fmt.Sprintf("%d", r.Slot),
 	}, yaml.Flow(true))
 	if err != nil {
 		return nil, err
