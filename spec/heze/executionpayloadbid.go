@@ -24,8 +24,6 @@ import (
 )
 
 // ExecutionPayloadBid represents an execution payload bid for EIP-7805 (Heze).
-// Adds InclusionListBits on top of the gloas bid; ExecutionRequestsRoot is
-// retained.
 type ExecutionPayloadBid struct {
 	ParentBlockHash       phase0.Hash32              `ssz-size:"32"`
 	ParentBlockRoot       phase0.Root                `ssz-size:"32"`
@@ -39,7 +37,6 @@ type ExecutionPayloadBid struct {
 	ExecutionPayment      phase0.Gwei
 	BlobKZGCommitments    []deneb.KZGCommitment `dynssz-max:"MAX_BLOB_COMMITMENTS_PER_BLOCK"   ssz-max:"4096" ssz-size:"?,48"`
 	ExecutionRequestsRoot phase0.Root           `ssz-size:"32"`
-	InclusionListBits     []byte                `dynssz-size:"INCLUSION_LIST_COMMITTEE_SIZE/8" ssz-size:"2"`
 }
 
 // String returns a string version of the structure.

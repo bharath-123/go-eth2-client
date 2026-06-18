@@ -42,7 +42,6 @@ func (e *ExecutionPayloadBid) MarshalYAML() ([]byte, error) {
 		ExecutionPayment:      fmt.Sprintf("%d", e.ExecutionPayment),
 		BlobKZGCommitments:    blobKZGCommitments,
 		ExecutionRequestsRoot: fmt.Sprintf("%#x", e.ExecutionRequestsRoot),
-		InclusionListBits:     fmt.Sprintf("%#x", e.InclusionListBits),
 	}, yaml.Flow(true))
 	if err != nil {
 		return nil, err

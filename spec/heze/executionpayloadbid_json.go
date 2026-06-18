@@ -40,7 +40,6 @@ type executionPayloadBidJSON struct {
 	ExecutionPayment      string   `json:"execution_payment"`
 	BlobKZGCommitments    []string `json:"blob_kzg_commitments"`
 	ExecutionRequestsRoot string   `json:"execution_requests_root"`
-	InclusionListBits     string   `json:"inclusion_list_bits"`
 }
 
 // MarshalJSON implements json.Marshaler.
@@ -63,7 +62,6 @@ func (e *ExecutionPayloadBid) MarshalJSON() ([]byte, error) {
 		ExecutionPayment:      fmt.Sprintf("%d", e.ExecutionPayment),
 		BlobKZGCommitments:    blobKZGCommitments,
 		ExecutionRequestsRoot: fmt.Sprintf("%#x", e.ExecutionRequestsRoot),
-		InclusionListBits:     fmt.Sprintf("%#x", e.InclusionListBits),
 	})
 }
 
@@ -199,16 +197,6 @@ func (e *ExecutionPayloadBid) UnmarshalJSON(input []byte) error {
 		return errors.Wrap(err, "invalid execution requests root")
 	}
 	copy(e.ExecutionRequestsRoot[:], executionRequestsRoot)
-
-	// Inclusion list bits
-	if data.InclusionListBits == "" {
-		return errors.New("inclusion list bits missing")
-	}
-	inclusionListBits, err := hex.DecodeString(strings.TrimPrefix(data.InclusionListBits, "0x"))
-	if err != nil {
-		return errors.Wrap(err, "invalid inclusion list bits")
-	}
-	e.InclusionListBits = inclusionListBits
 
 	return nil
 }
